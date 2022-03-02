@@ -89,16 +89,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
 
-        if (cursor.moveToNext()){
-            do {
-                @SuppressLint("Range")
+//        if (cursor.moveToNext()){
+//            do {
+//                @SuppressLint("Range")
+//                Note note = new Note(
+//                        cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ID)),
+//                        cursor.getString(cursor.getColumnIndex(Note.COLUMN_NOTE)),
+//                        cursor.getString(cursor.getColumnIndex(Note.COLUMN_TIMESTAMP))
+//                );
+//                notes.add(note);
+//            } while (cursor.moveToNext());
+//        }
+
+        while (cursor.moveToNext()){
+            @SuppressLint("Range")
                 Note note = new Note(
                         cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ID)),
                         cursor.getString(cursor.getColumnIndex(Note.COLUMN_NOTE)),
                         cursor.getString(cursor.getColumnIndex(Note.COLUMN_TIMESTAMP))
                 );
                 notes.add(note);
-            } while (cursor.moveToNext());
         }
 
         db.close();
@@ -107,6 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getNotesCount(){
+
         String countQuery = "SELECT * FROM " + Note.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery,null);
